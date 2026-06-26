@@ -1,0 +1,61 @@
+Q3.What is factory pattern and how you implement it in python
+Answers:
+Factory Pattern in Python
+
+What is the Factory Pattern?
+
+The Factory Pattern is a creational design pattern that provides a way to create objects without exposing the object creation logic to the client. Instead of instantiating objects directly, the client requests them from a factory.
+
+Benefits
+
+- Reduces tight coupling between classes.
+- Makes the code easier to maintain and extend.
+- Follows the Open/Closed Principle.
+- Centralizes object creation logic.
+
+---
+
+Example
+
+class Car:
+    def drive(self):
+        return "Driving a Car"
+
+class Bike:
+    def drive(self):
+        return "Riding a Bike"
+
+class VehicleFactory:
+    @staticmethod
+    def get_vehicle(vehicle_type):
+        if vehicle_type == "car":
+            return Car()
+        elif vehicle_type == "bike":
+            return Bike()
+        else:
+            raise ValueError("Invalid vehicle type")
+
+vehicle = VehicleFactory.get_vehicle("car")
+print(vehicle.drive())
+
+Output:
+
+Driving a Car
+
+---
+
+How It Works
+
+- "VehicleFactory" is responsible for creating objects.
+- The client requests an object by passing the required type.
+- The factory returns the appropriate object ("Car" or "Bike").
+- The client does not need to know how the object is created.
+
+---
+
+Key Points
+
+- A Factory creates objects based on the given input.
+- It hides the object creation logic from the client.
+- It improves code reusability and maintainability.
+- It is commonly used when multiple related objects need to be created.
