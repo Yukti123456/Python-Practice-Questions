@@ -1,0 +1,72 @@
+Q5-What is observer pattern and how it is relate to even driven programming
+Answer:
+Observer Pattern in Python
+
+What is the Observer Pattern?
+
+The Observer Pattern is a behavioral design pattern in which one object (called the Subject) maintains a list of dependent objects (called Observers) and automatically notifies them whenever its state changes.
+
+Benefits
+
+- Reduces coupling between objects.
+- Supports one-to-many communication.
+- Makes the system more flexible and scalable.
+
+---
+
+How It Relates to Event-Driven Programming
+
+The Observer Pattern is the foundation of Event-Driven Programming.
+
+- The Subject acts as an event source.
+- The Observers act as event listeners.
+- When an event occurs (such as a button click, new message, or stock price change), the subject automatically notifies all registered observers.
+
+This allows different parts of the application to respond to events without being tightly connected.
+
+---
+
+Example
+
+class Subject:
+    def __init__(self):
+        self.observers = []
+
+    def attach(self, observer):
+        self.observers.append(observer)
+
+    def notify(self, message):
+        for observer in self.observers:
+            observer.update(message)
+
+
+class EmailSubscriber:
+    def update(self, message):
+        print(f"Email: {message}")
+
+
+class SMSSubscriber:
+    def update(self, message):
+        print(f"SMS: {message}")
+
+
+subject = Subject()
+
+subject.attach(EmailSubscriber())
+subject.attach(SMSSubscriber())
+
+subject.notify("New product launched!")
+
+Output
+
+Email: New product launched!
+SMS: New product launched!
+
+---
+
+Key Points
+
+- The Subject stores and manages observers.
+- Observers receive updates automatically when the subject changes.
+- Supports one-to-many communication.
+- Commonly used in event-driven systems, GUI applications, notifications, and messaging systems.
