@@ -1,0 +1,70 @@
+Q6-How do you implement decorators pattern in python
+Answer:
+Decorator Pattern in Python
+
+What is the Decorator Pattern?
+
+The Decorator Pattern is a structural design pattern that allows you to add new functionality to an object dynamically without modifying its original code.
+
+Benefits
+
+- Adds behavior without changing the existing class.
+- Follows the Open/Closed Principle.
+- More flexible than inheritance for extending functionality.
+
+Example
+
+from abc import ABC, abstractmethod
+
+# Component
+class Coffee(ABC):
+    @abstractmethod
+    def cost(self):
+        pass
+
+# Concrete Component
+class SimpleCoffee(Coffee):
+    def cost(self):
+        return 100
+
+# Decorator
+class CoffeeDecorator(Coffee):
+    def __init__(self, coffee):
+        self.coffee = coffee
+
+# Concrete Decorators
+class MilkDecorator(CoffeeDecorator):
+    def cost(self):
+        return self.coffee.cost() + 20
+
+class SugarDecorator(CoffeeDecorator):
+    def cost(self):
+        return self.coffee.cost() + 10
+
+# Client Code
+coffee = SimpleCoffee()
+coffee = MilkDecorator(coffee)
+coffee = SugarDecorator(coffee)
+
+print("Total Cost:", coffee.cost())
+
+Output
+
+Total Cost: 130
+
+
+How It Works
+
+- "SimpleCoffee" is the original object.
+- "CoffeeDecorator" wraps the original object.
+- "MilkDecorator" and "SugarDecorator" add extra functionality.
+- Multiple decorators can be combined to extend the object's behavior.
+
+---
+
+Key Points
+
+- Adds functionality dynamically at runtime.
+- Does not modify the original class.
+- Allows multiple decorators to be chained together.
+- Commonly used for logging, authentication, caching, and adding features to objects.
