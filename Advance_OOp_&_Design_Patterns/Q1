@@ -1,0 +1,38 @@
+Q1.What is the difference between __new__() and __init__() methods in Python when would you override __new__()?
+Answer:
+Difference Between __new__() and __init__() in Python
+Overview
+
+__new__() and __init__() are special methods used during object creation in Python.
+
+__new__()	__init__()
+Creates a new object.	Initializes the object after creation.
+Called before __init__().	Called after __new__().
+Returns the object.	Returns None.
+Used to control object creation.	Used to initialize object attributes.
+Execution Flow
+obj = MyClass.__new__(MyClass)
+MyClass.__init__(obj)
+Example
+class Student:
+
+    def __new__(cls):
+        print("Creating object...")
+        return super().__new__(cls)
+
+    def __init__(self):
+        print("Initializing object...")
+
+s = Student()
+
+Output:
+
+Creating object...
+Initializing object...
+When to Override __new__()?
+
+Override __new__() when you need to control object creation, such as:
+
+Implementing the Singleton pattern.
+Working with immutable objects (str, int, tuple).
+Returning an existing object instead of creating a new one.
