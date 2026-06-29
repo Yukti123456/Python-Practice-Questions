@@ -1,0 +1,58 @@
+Question: What are Mixins and how do you use them in Python?
+
+Answer:
+
+Mixins are special classes that provide additional functionality to other classes through multiple inheritance. A mixin is not meant to be instantiated on its own; instead, it is used to add reusable features to other classes.
+
+Benefits:
+
+* Promotes code reuse.
+* Avoids code duplication.
+* Keeps classes small and focused.
+* Adds functionality without modifying existing classes.
+
+Use Case:
+
+Suppose multiple classes need logging functionality. Instead of writing the same logging code in every class, you can create a `LoggerMixin` and inherit from it.
+
+Example:
+
+```python id="07z1o7"
+class LoggerMixin:
+    def log(self, message):
+        print(f"LOG: {message}")
+
+class User(LoggerMixin):
+    def create_user(self):
+        self.log("User created")
+
+class Product(LoggerMixin):
+    def add_product(self):
+        self.log("Product added")
+
+user = User()
+user.create_user()
+
+product = Product()
+product.add_product()
+```
+
+Output:
+
+```text id="p1zx5v"
+LOG: User created
+LOG: Product added
+```
+
+How It Works:
+
+* `LoggerMixin` provides the `log()` method.
+* `User` and `Product` inherit from `LoggerMixin`.
+* Both classes can use the logging functionality without rewriting the code.
+
+Key Points:
+
+* A mixin adds reusable functionality to multiple classes.
+* Mixins are usually not instantiated directly.
+* They are commonly used with multiple inheritance.
+* Common use cases include logging, authentication, validation, serialization, and caching.
