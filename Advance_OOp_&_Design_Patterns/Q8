@@ -1,0 +1,59 @@
+Question: Explain the Adapter Pattern and provide an example of its implementation.
+
+Answer:
+
+The Adapter Pattern is a structural design pattern that allows two incompatible interfaces to work together. It acts as a bridge between an existing class and the client by converting one interface into another that the client expects.
+
+Benefits:
+
+* Allows incompatible classes to work together.
+* Promotes code reusability.
+* Reduces changes to existing code.
+* Follows the Open/Closed Principle.
+
+Use Case:
+
+Suppose an application expects data in JSON format, but an external service provides data in XML format. An Adapter can convert the XML data into JSON so the application can use it without modifying the existing code.
+
+Example:
+
+```python
+# Existing class
+class XMLService:
+    def get_xml_data(self):
+        return "<data>Employee Details</data>"
+
+# Adapter
+class XMLToJSONAdapter:
+    def __init__(self, xml_service):
+        self.xml_service = xml_service
+
+    def get_json_data(self):
+        xml = self.xml_service.get_xml_data()
+        return {"data": xml}
+
+# Client Code
+xml_service = XMLService()
+adapter = XMLToJSONAdapter(xml_service)
+
+print(adapter.get_json_data())
+```
+
+Output:
+
+```text
+{'data': '<data>Employee Details</data>'}
+```
+
+How It Works:
+
+* `XMLService` provides data in XML format.
+* `XMLToJSONAdapter` converts the XML response into the format expected by the client.
+* The client communicates only with the adapter and does not need to know how the conversion happens.
+
+Key Points:
+
+* The Adapter Pattern connects incompatible interfaces.
+* It acts as a bridge between existing and new code.
+* It helps integrate third-party libraries or legacy systems without modifying them.
+* Commonly used when working with external APIs, legacy applications, or different data formats.
