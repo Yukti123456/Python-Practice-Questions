@@ -1,0 +1,79 @@
+Question: What is the difference between Inheritance and Composition? When should you use them?
+
+Answer:
+
+Inheritance is an "is-a" relationship, where one class inherits the properties and methods of another class.
+
+Example:
+
+```python
+class Animal:
+    def sound(self):
+        print("Animal makes a sound")
+
+class Dog(Animal):
+    pass
+
+dog = Dog()
+dog.sound()
+```
+
+Output:
+
+```
+Animal makes a sound
+```
+
+Composition is a "has-a" relationship, where one class contains an object of another class to reuse its functionality.
+
+Example:
+
+```python
+class Engine:
+    def start(self):
+        print("Engine started")
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()
+
+    def start_car(self):
+        self.engine.start()
+
+car = Car()
+car.start_car()
+```
+
+Output:
+
+```
+Engine started
+```
+
+Difference:
+
+| Inheritance                        | Composition                        |
+| ---------------------------------- | ---------------------------------- |
+| Represents an "is-a" relationship. | Represents a "has-a" relationship. |
+| Inherits from another class.       | Uses an object of another class.   |
+| Creates tight coupling.            | Creates loose coupling.            |
+| Less flexible.                     | More flexible and maintainable.    |
+
+When to Use Inheritance:
+
+* When there is an "is-a" relationship.
+* When the child class should inherit and extend the parent class.
+* Example: Dog is an Animal.
+
+When to Use Composition:
+
+* When there is a "has-a" relationship.
+* When you want to reuse functionality without inheritance.
+* When you need better flexibility and loose coupling.
+* Example: Car has an Engine.
+
+Key Points:
+
+* Inheritance = "is-a" relationship.
+* Composition = "has-a" relationship.
+* Composition is generally preferred because it provides better flexibility, maintainability, and loose coupling.
