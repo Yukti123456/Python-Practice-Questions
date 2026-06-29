@@ -1,0 +1,84 @@
+Question: What is the State Pattern? Provide a practical example.
+
+Answer:
+
+The State Pattern is a behavioral design pattern that allows an object to change its behavior when its internal state changes. Instead of using multiple `if-else` or `switch` statements, the behavior is divided into separate state classes.
+
+Benefits:
+
+* Eliminates complex conditional statements.
+* Makes code easier to maintain and extend.
+* Follows the Open/Closed Principle.
+* Allows behavior to change dynamically at runtime.
+
+Use Case:
+
+A media player can be in different states such as **Playing**, **Paused**, or **Stopped**. The actions performed depend on the current state.
+
+Example:
+
+```python
+from abc import ABC, abstractmethod
+
+# State Interface
+class State(ABC):
+    @abstractmethod
+    def handle(self):
+        pass
+
+# Concrete States
+class PlayingState(State):
+    def handle(self):
+        print("Music is Playing")
+
+class PausedState(State):
+    def handle(self):
+        print("Music is Paused")
+
+class StoppedState(State):
+    def handle(self):
+        print("Music is Stopped")
+
+# Context
+class MusicPlayer:
+    def __init__(self, state):
+        self.state = state
+
+    def set_state(self, state):
+        self.state = state
+
+    def play(self):
+        self.state.handle()
+
+# Client Code
+player = MusicPlayer(PlayingState())
+player.play()
+
+player.set_state(PausedState())
+player.play()
+
+player.set_state(StoppedState())
+player.play()
+```
+
+Output:
+
+```text
+Music is Playing
+Music is Paused
+Music is Stopped
+```
+
+How It Works:
+
+* `State` defines a common interface.
+* `PlayingState`, `PausedState`, and `StoppedState` implement different behaviors.
+* `MusicPlayer` (Context) holds the current state.
+* The behavior changes automatically when the state is changed.
+
+Key Points:
+
+* Encapsulates state-specific behavior into separate classes.
+* Removes large `if-else` or `switch` statements.
+* Allows objects to change behavior dynamically.
+* Commonly used in media players, order processing systems, vending machines, traffic lights, and workflow management.
