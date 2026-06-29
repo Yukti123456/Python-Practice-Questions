@@ -1,0 +1,59 @@
+Question: How do you create a Parameterized Decorator in Python?
+
+Answer:
+
+A Parameterized Decorator is a decorator that accepts its own arguments before decorating a function. It is implemented using three nested functions:
+
+1. The outer function accepts the decorator arguments.
+2. The decorator function accepts the function to be decorated.
+3. The wrapper function adds the required functionality.
+
+Benefits:
+
+* Makes decorators configurable.
+* Promotes code reuse.
+* Allows different behavior based on parameters.
+
+Example:
+
+```python
+def repeat(times):
+    def decorator(func):
+        def wrapper():
+            for _ in range(times):
+                func()
+        return wrapper
+    return decorator
+
+@repeat(3)
+def greet():
+    print("Hello!")
+
+greet()
+```
+
+Output:
+
+```text
+Hello!
+Hello!
+Hello!
+```
+
+How It Works:
+
+* `repeat(3)` is called first and returns the `decorator` function.
+* The `decorator` function receives the `greet()` function.
+* The `wrapper` function executes `greet()` three times.
+* `@repeat(3)` is equivalent to:
+
+```python
+greet = repeat(3)(greet)
+```
+
+Key Points:
+
+* A parameterized decorator accepts arguments before decorating a function.
+* It requires three nested functions: outer function, decorator, and wrapper.
+* Useful when the decorator behavior depends on user-defined parameters.
+* Common use cases include retry logic, logging levels, authorization, rate limiting, and repeating function execution.
