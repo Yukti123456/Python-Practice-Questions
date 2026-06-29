@@ -1,0 +1,83 @@
+Question: How do you implement the Builder Pattern in Python?
+
+Answer:
+
+The Builder Pattern is a creational design pattern used to construct complex objects step by step. It separates the object construction process from its representation, allowing the same construction process to create different types of objects.
+
+Benefits:
+
+* Simplifies the creation of complex objects.
+* Improves code readability.
+* Allows step-by-step object creation.
+* Separates object construction from its representation.
+
+Use Case:
+
+Suppose you are building a computer. Different users may require different configurations, such as RAM, CPU, and Storage. The Builder Pattern allows you to create different configurations using the same building process.
+
+Example:
+
+```python
+# Product
+class Computer:
+    def __init__(self):
+        self.cpu = None
+        self.ram = None
+        self.storage = None
+
+    def __str__(self):
+        return f"CPU: {self.cpu}, RAM: {self.ram}, Storage: {self.storage}"
+
+
+# Builder
+class ComputerBuilder:
+    def __init__(self):
+        self.computer = Computer()
+
+    def set_cpu(self, cpu):
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram):
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage):
+        self.computer.storage = storage
+        return self
+
+    def build(self):
+        return self.computer
+
+
+# Client Code
+computer = (
+    ComputerBuilder()
+    .set_cpu("Intel i7")
+    .set_ram("16 GB")
+    .set_storage("512 GB SSD")
+    .build()
+)
+
+print(computer)
+```
+
+Output:
+
+```text
+CPU: Intel i7, RAM: 16 GB, Storage: 512 GB SSD
+```
+
+How It Works:
+
+* `Computer` is the product being built.
+* `ComputerBuilder` builds the object step by step.
+* Each method configures one part of the object and returns the builder.
+* The `build()` method returns the completed object.
+
+Key Points:
+
+* Creates complex objects step by step.
+* Separates construction logic from the object.
+* Improves readability with method chaining.
+* Commonly used for creating objects with many optional parameters, such as configuration objects, database connections, and UI components.
