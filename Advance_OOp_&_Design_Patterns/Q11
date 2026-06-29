@@ -1,0 +1,88 @@
+Question: What is the Template Method Pattern and how do you implement it in Python?
+
+Answer:
+
+The Template Method Pattern is a behavioral design pattern that defines the overall structure (template) of an algorithm in a base class while allowing subclasses to implement or customize specific steps without changing the algorithm's structure.
+
+Benefits:
+
+* Promotes code reuse.
+* Avoids code duplication.
+* Ensures a fixed sequence of steps.
+* Follows the Open/Closed Principle.
+
+Use Case:
+
+Suppose different report formats (PDF and Excel) follow the same process:
+
+1. Read data
+2. Process data
+3. Generate the report
+
+The processing steps remain the same, but the report generation step differs.
+
+Example:
+
+```python
+from abc import ABC, abstractmethod
+
+class Report(ABC):
+
+    def generate_report(self):
+        self.read_data()
+        self.process_data()
+        self.export()
+
+    def read_data(self):
+        print("Reading data...")
+
+    def process_data(self):
+        print("Processing data...")
+
+    @abstractmethod
+    def export(self):
+        pass
+
+
+class PDFReport(Report):
+    def export(self):
+        print("Exporting as PDF")
+
+
+class ExcelReport(Report):
+    def export(self):
+        print("Exporting as Excel")
+
+
+pdf = PDFReport()
+pdf.generate_report()
+
+excel = ExcelReport()
+excel.generate_report()
+```
+
+Output:
+
+```text
+Reading data...
+Processing data...
+Exporting as PDF
+
+Reading data...
+Processing data...
+Exporting as Excel
+```
+
+How It Works:
+
+* The base class defines the algorithm using the `generate_report()` method.
+* Common steps (`read_data()` and `process_data()`) are implemented in the base class.
+* The `export()` method is abstract and implemented by each subclass.
+* Subclasses customize only the required step while keeping the overall algorithm unchanged.
+
+Key Points:
+
+* Defines the skeleton of an algorithm in a base class.
+* Allows subclasses to override specific steps.
+* Prevents duplication of common logic.
+* Commonly used in report generation, data processing, file parsing, and workflow management.
