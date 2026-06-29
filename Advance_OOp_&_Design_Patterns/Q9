@@ -1,0 +1,65 @@
+Question: What is Duck Typing and how does it relate to Python philosophy?
+
+Answer:
+
+Duck Typing is a concept in Python where the type of an object is less important than the methods or behaviors it provides. In simple words, if an object behaves like the expected object, Python allows it to be used, regardless of its actual class.
+
+The idea comes from the saying:
+
+"If it walks like a duck and quacks like a duck, then it is a duck."
+
+Instead of checking an object's type, Python checks whether the required method or attribute exists.
+
+Example:
+
+```python
+class Dog:
+    def speak(self):
+        print("Bark")
+
+class Cat:
+    def speak(self):
+        print("Meow")
+
+def make_sound(animal):
+    animal.speak()
+
+dog = Dog()
+cat = Cat()
+
+make_sound(dog)
+make_sound(cat)
+```
+
+Output:
+
+```text
+Bark
+Meow
+```
+
+How It Relates to Python Philosophy:
+
+Duck Typing follows Python's philosophy of focusing on behavior rather than object type. Python encourages writing flexible and reusable code instead of checking whether an object belongs to a specific class.
+
+For example, instead of checking:
+
+```python
+if isinstance(animal, Dog):
+    animal.speak()
+```
+
+Python simply does:
+
+```python
+animal.speak()
+```
+
+As long as the object has a `speak()` method, the code works.
+
+Key Points:
+
+* Focuses on an object's behavior, not its type.
+* No need to inherit from a specific class.
+* Makes code more flexible and reusable.
+* Commonly used in Python because of its dynamic typing.
