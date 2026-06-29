@@ -1,0 +1,85 @@
+Question: What is a Class Decorator and how is it different from a Function Decorator?
+
+Answer:
+
+A Class Decorator is a decorator that takes a class as input, modifies or extends its behavior, and returns the modified class without changing the original class definition.
+
+Like function decorators, class decorators help add extra functionality without modifying existing code.
+
+Benefits:
+
+* Adds new behavior to classes.
+* Promotes code reuse.
+* Keeps the original class unchanged.
+* Follows the Open/Closed Principle.
+
+Example of a Class Decorator:
+
+```python
+def add_greeting(cls):
+    class NewClass(cls):
+        def greet(self):
+            return "Hello, Welcome!"
+    return NewClass
+
+@add_greeting
+class Person:
+    pass
+
+p = Person()
+print(p.greet())
+```
+
+Output:
+
+```text
+Hello, Welcome!
+```
+
+How It Works:
+
+* `add_greeting` receives the `Person` class.
+* It creates a new class that inherits from `Person`.
+* The new class adds a `greet()` method.
+* `@add_greeting` replaces the original `Person` class with the modified class.
+
+Difference Between Function Decorator and Class Decorator:
+
+| Function Decorator                                 | Class Decorator                               |
+| -------------------------------------------------- | --------------------------------------------- |
+| Decorates a function or method.                    | Decorates a class.                            |
+| Adds behavior before or after a function executes. | Adds or modifies class attributes or methods. |
+| Receives a function as an argument.                | Receives a class as an argument.              |
+| Returns a modified function.                       | Returns a modified class.                     |
+
+Function Decorator Example:
+
+```python
+def logger(func):
+    def wrapper():
+        print("Before function call")
+        func()
+        print("After function call")
+    return wrapper
+
+@logger
+def greet():
+    print("Hello")
+
+greet()
+```
+
+Output:
+
+```text
+Before function call
+Hello
+After function call
+```
+
+Key Points:
+
+* A Function Decorator extends the behavior of functions or methods.
+* A Class Decorator extends or modifies the behavior of classes.
+* Both allow adding functionality without changing the original code.
+* Common use cases include logging, validation, authentication, caching, and adding methods or attributes dynamically.
