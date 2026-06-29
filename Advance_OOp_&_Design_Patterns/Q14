@@ -1,0 +1,73 @@
+Question: Explain the Liskov Substitution Principle (LSP) with a Python example.
+
+Answer:
+
+The Liskov Substitution Principle (LSP) states that a subclass should be able to replace its parent class without changing the correctness or expected behavior of the program.
+
+In simple words, if a class `B` inherits from class `A`, then objects of class `B` should be usable wherever objects of class `A` are expected.
+
+Benefits:
+
+* Improves code reusability.
+* Supports polymorphism.
+* Reduces unexpected behavior.
+* Makes code easier to maintain.
+
+Example (Follows LSP):
+
+```python
+class Bird:
+    def move(self):
+        print("Bird is moving")
+
+class Sparrow(Bird):
+    def move(self):
+        print("Sparrow is flying")
+
+def make_bird_move(bird):
+    bird.move()
+
+make_bird_move(Bird())
+make_bird_move(Sparrow())
+```
+
+Output:
+
+```text
+Bird is moving
+Sparrow is flying
+```
+
+In this example, `Sparrow` can replace `Bird` without causing any issues, so it follows the Liskov Substitution Principle.
+
+Example (Violates LSP):
+
+```python
+class Bird:
+    def fly(self):
+        print("Bird can fly")
+
+class Penguin(Bird):
+    def fly(self):
+        raise Exception("Penguins cannot fly")
+
+penguin = Penguin()
+penguin.fly()
+```
+
+Output:
+
+```text
+Exception: Penguins cannot fly
+```
+
+This violates LSP because `Penguin` cannot correctly replace `Bird`. The parent class expects all birds to fly, but a penguin cannot.
+
+A better design would separate flying behavior into a different class or interface instead of forcing all birds to implement `fly()`.
+
+Key Points:
+
+* A child class should be able to replace its parent class without breaking the program.
+* The child class should preserve the expected behavior of the parent class.
+* Avoid overriding methods in a way that changes their intended behavior.
+* LSP promotes reliable inheritance and better object-oriented design.
