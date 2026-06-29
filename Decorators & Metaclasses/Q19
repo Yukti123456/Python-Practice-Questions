@@ -1,0 +1,79 @@
+Question: Explain `functools.wraps` decorator and why it is important.
+
+Answer:
+
+`functools.wraps` is a decorator provided by the `functools` module. It is used inside custom decorators to preserve the original function's metadata, such as its name, docstring, annotations, and module information.
+
+Without `functools.wraps`, the decorated function loses its original identity and appears as the wrapper function.
+
+Benefits:
+
+* Preserves the original function name (`__name__`).
+* Preserves the original docstring (`__doc__`).
+* Preserves annotations and other metadata.
+* Makes debugging and introspection easier.
+
+Example Without `functools.wraps`:
+
+```python
+def logger(func):
+    def wrapper():
+        print("Function started")
+        func()
+    return wrapper
+
+@logger
+def greet():
+    """Greets the user."""
+    print("Hello!")
+
+print(greet.__name__)
+print(greet.__doc__)
+```
+
+Output:
+
+```text
+wrapper
+None
+```
+
+Example With `functools.wraps`:
+
+```python
+from functools import wraps
+
+def logger(func):
+    @wraps(func)
+    def wrapper():
+        print("Function started")
+        func()
+    return wrapper
+
+@logger
+def greet():
+    """Greets the user."""
+    print("Hello!")
+
+print(greet.__name__)
+print(greet.__doc__)
+```
+
+Output:
+
+```text
+greet
+Greets the user.
+```
+
+How It Works:
+
+* `@wraps(func)` copies the metadata from the original function to the wrapper function.
+* The decorated function behaves like the original function while still adding extra functionality.
+
+Key Points:
+
+* `functools.wraps` is used inside custom decorators.
+* It preserves the original function's metadata.
+* It improves debugging, documentation, and introspection.
+* It is considered a best practice when writing custom decorators.
