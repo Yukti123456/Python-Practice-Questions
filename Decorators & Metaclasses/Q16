@@ -1,0 +1,95 @@
+Question: How do Function Decorators work? Explain with a practical example.
+
+Answer:
+
+A Function Decorator is a function that takes another function as input, adds extra functionality to it, and returns the modified function without changing its original code.
+
+Decorators are commonly used for logging, authentication, authorization, caching, timing, and validation.
+
+Benefits:
+
+* Reuses code.
+* Avoids code duplication.
+* Keeps business logic separate from additional functionality.
+* Follows the Open/Closed Principle.
+
+Syntax:
+
+```python
+@decorator_name
+def function_name():
+    pass
+```
+
+Example:
+
+```python
+def logger(func):
+    def wrapper():
+        print("Function execution started")
+        func()
+        print("Function execution completed")
+    return wrapper
+
+@logger
+def greet():
+    print("Hello, World!")
+
+greet()
+```
+
+Output:
+
+```text
+Function execution started
+Hello, World!
+Function execution completed
+```
+
+How It Works:
+
+* `logger` is the decorator function.
+* It accepts another function (`func`) as an argument.
+* Inside it, a `wrapper()` function adds extra behavior before and after calling `func()`.
+* `@logger` is equivalent to:
+
+```python
+greet = logger(greet)
+```
+
+* When `greet()` is called, Python actually executes the `wrapper()` function.
+
+Practical Example: Measuring Function Execution Time
+
+```python
+import time
+
+def timer(func):
+    def wrapper():
+        start = time.time()
+        func()
+        end = time.time()
+        print(f"Execution Time: {end - start:.4f} seconds")
+    return wrapper
+
+@timer
+def process_data():
+    time.sleep(2)
+    print("Processing completed")
+
+process_data()
+```
+
+Output:
+
+```text
+Processing completed
+Execution Time: 2.00 seconds
+```
+
+Key Points:
+
+* A decorator is a function that wraps another function.
+* It adds functionality without modifying the original function.
+* `@decorator_name` is syntactic sugar for `function = decorator(function)`.
+* Common use cases include logging, authentication, authorization, caching, validation, and performance monitoring.
