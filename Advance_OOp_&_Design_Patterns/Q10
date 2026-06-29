@@ -1,0 +1,130 @@
+Question: Explain the concept of SOLID Principles and their application in Python.
+
+Answer:
+
+SOLID is a set of five object-oriented design principles that help developers write clean, maintainable, scalable, and reusable code.
+
+1. S - Single Responsibility Principle (SRP)
+
+A class should have only one reason to change, meaning it should have only one responsibility.
+
+Example:
+
+```python
+class Report:
+    def generate(self):
+        print("Generating Report")
+
+class ReportPrinter:
+    def print_report(self):
+        print("Printing Report")
+```
+
+Here, one class generates the report, while another class prints it.
+
+---
+
+2. O - Open/Closed Principle (OCP)
+
+A class should be open for extension but closed for modification. You should be able to add new functionality without changing existing code.
+
+Example:
+
+```python
+class Payment:
+    def pay(self):
+        pass
+
+class CreditCard(Payment):
+    def pay(self):
+        print("Paid using Credit Card")
+
+class UPI(Payment):
+    def pay(self):
+        print("Paid using UPI")
+```
+
+New payment methods can be added by creating new classes without modifying existing ones.
+
+---
+
+3. L - Liskov Substitution Principle (LSP)
+
+A subclass should be able to replace its parent class without affecting the correctness of the program.
+
+Example:
+
+```python
+class Bird:
+    def fly(self):
+        print("Flying")
+
+class Sparrow(Bird):
+    pass
+
+bird = Sparrow()
+bird.fly()
+```
+
+The child class can be used wherever the parent class is expected.
+
+---
+
+4. I - Interface Segregation Principle (ISP)
+
+A class should not be forced to implement methods it does not need. Instead of one large interface, use smaller, specific interfaces.
+
+Example:
+
+```python
+from abc import ABC, abstractmethod
+
+class Printer(ABC):
+    @abstractmethod
+    def print_doc(self):
+        pass
+
+class Scanner(ABC):
+    @abstractmethod
+    def scan_doc(self):
+        pass
+```
+
+Classes implement only the interfaces they require.
+
+---
+
+5. D - Dependency Inversion Principle (DIP)
+
+High-level modules should depend on abstractions, not on concrete implementations.
+
+Example:
+
+```python
+class Keyboard:
+    def type(self):
+        print("Typing")
+
+class Computer:
+    def __init__(self, keyboard):
+        self.keyboard = keyboard
+
+    def work(self):
+        self.keyboard.type()
+
+computer = Computer(Keyboard())
+computer.work()
+```
+
+The `Computer` class depends on an abstraction (a keyboard object), making it easy to replace with another keyboard implementation.
+
+---
+
+Applications of SOLID Principles in Python
+
+* Improves code readability and maintainability.
+* Makes applications easier to extend.
+* Reduces code duplication.
+* Promotes loose coupling between classes.
+* Simplifies testing and debugging.
+* Commonly used while designing large-scale applications and design patterns.
