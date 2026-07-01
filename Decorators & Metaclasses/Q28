@@ -1,0 +1,65 @@
+Question: How do you implement lazy property evaluation using descriptors?
+
+Answer:
+
+Lazy property evaluation is a technique where the value of a property is computed only when it is accessed for the first time. The computed value is then cached, so subsequent accesses return the cached value instead of recalculating it.
+
+Descriptors provide a clean way to implement this behavior using the `__get__()` method.
+
+Benefits:
+
+* Improves performance by avoiding unnecessary computations.
+* Computes the value only when needed.
+* Caches the result for future use.
+
+Example:
+
+```python
+class LazyProperty:
+    def __init__(self, func):
+        self.func = func
+        self.name = func.__name__
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+
+        value = self.func(instance)
+        setattr(instance, self.name, value)   # Cache the value
+        return value
+
+
+class Data:
+    @LazyProperty
+    def result(self):
+        print("Computing value...")
+        return 100
+
+
+obj = Data()
+
+print(obj.result)   # First access
+print(obj.result)   # Second access
+```
+
+Output:
+
+```text
+Computing value...
+100
+100
+```
+
+How It Works:
+
+* `LazyProperty` is a descriptor that implements the `__get__()` method.
+* On the first access, it computes the value by calling the original method.
+* The computed value is stored in the instance using `setattr()`.
+* On subsequent accesses, Python finds the cached value in the instance dictionary, so the descriptor is bypassed and the value is returned directly.
+
+Key Points:
+
+* Lazy evaluation computes a value only when it is needed.
+* Descriptors implement lazy properties through the `__get__()` method.
+* The computed value is cached to avoid repeated calculations.
+* Useful for expensive operations such as database queries, file loading, and complex calculations.
