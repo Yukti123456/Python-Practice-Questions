@@ -1,0 +1,98 @@
+Question: Explain Data Descriptors and Non-Data Descriptors in Python.
+
+Answer:
+
+A descriptor is a Python object that controls how an attribute is accessed, assigned, or deleted using special methods such as `__get__()`, `__set__()`, and `__delete__()`.
+
+There are two types of descriptors:
+
+1. Data Descriptor
+
+A Data Descriptor implements:
+
+* `__get__()`
+* `__set__()` and/or `__delete__()`
+
+Since it defines `__set__()` or `__delete__()`, it has higher priority than an instance attribute.
+
+Example:
+
+```python id="u7dijr"
+class DataDescriptor:
+    def __get__(self, instance, owner):
+        return instance._value
+
+    def __set__(self, instance, value):
+        instance._value = value
+
+
+class Employee:
+    salary = DataDescriptor()
+
+    def __init__(self, salary):
+        self.salary = salary
+
+
+emp = Employee(50000)
+print(emp.salary)
+```
+
+Output:
+
+```text id="5q0uqt"
+50000
+```
+
+---
+
+2. Non-Data Descriptor
+
+A Non-Data Descriptor implements only:
+
+* `__get__()`
+
+It does not implement `__set__()` or `__delete__()`. If an instance attribute with the same name exists, the instance attribute takes priority over the descriptor.
+
+Example:
+
+```python id="hrc2r5"
+class NonDataDescriptor:
+    def __get__(self, instance, owner):
+        return "Value from Descriptor"
+
+
+class Employee:
+    salary = NonDataDescriptor()
+
+
+emp = Employee()
+
+print(emp.salary)
+
+emp.salary = 50000
+
+print(emp.salary)
+```
+
+Output:
+
+```text id="m0qgcw"
+Value from Descriptor
+50000
+```
+
+Difference Between Data Descriptor and Non-Data Descriptor:
+
+| Data Descriptor                                           | Non-Data Descriptor                          |
+| --------------------------------------------------------- | -------------------------------------------- |
+| Implements `__get__()` and `__set__()` or `__delete__()`. | Implements only `__get__()`.                 |
+| Has higher priority than instance attributes.             | Instance attributes override the descriptor. |
+| Can control reading and writing of attributes.            | Controls only attribute access.              |
+| Used for validation, properties, and managed attributes.  | Used for read-only or computed attributes.   |
+
+Key Points:
+
+* A descriptor customizes attribute access in Python.
+* A Data Descriptor implements `__get__()` plus `__set__()` and/or `__delete__()`.
+* A Non-Data Descriptor implements only `__get__()`.
+* Data Descriptors have higher precedence than instance attributes, while Non-Data Descriptors do not.
