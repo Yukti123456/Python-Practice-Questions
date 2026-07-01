@@ -1,0 +1,110 @@
+Question: Explain the `map()`, `filter()`, and `reduce()` functions with examples.
+
+Answer:
+
+`map()`, `filter()`, and `reduce()` are built-in functional programming tools in Python used to process collections such as lists and tuples.
+
+1. `map()`
+
+The `map()` function applies a given function to every element of an iterable and returns a new iterator containing the transformed values.
+
+Syntax:
+
+```python
+map(function, iterable)
+```
+
+Example:
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+squares = list(map(lambda x: x ** 2, numbers))
+
+print(squares)
+```
+
+Output:
+
+```text
+[1, 4, 9, 16, 25]
+```
+
+2. `filter()`
+
+The `filter()` function selects elements from an iterable that satisfy a given condition.
+
+Syntax:
+
+```python
+filter(function, iterable)
+```
+
+Example:
+
+```python
+numbers = [1, 2, 3, 4, 5, 6]
+
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+
+print(even_numbers)
+```
+
+Output:
+
+```text
+[2, 4, 6]
+```
+
+3. `reduce()`
+
+The `reduce()` function repeatedly applies a function to the elements of an iterable until only one final value remains.
+
+It is available in the `functools` module.
+
+Syntax:
+
+```python
+from functools import reduce
+
+reduce(function, iterable)
+```
+
+Example:
+
+```python
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+
+total = reduce(lambda x, y: x + y, numbers)
+
+print(total)
+```
+
+Output:
+
+```text
+15
+```
+
+---
+
+Difference Between `map()`, `filter()`, and `reduce()`
+
+| Function   | Purpose                                    | Output                               |
+| ---------- | ------------------------------------------ | ------------------------------------ |
+| `map()`    | Transforms every element.                  | A new iterable with modified values. |
+| `filter()` | Selects elements that satisfy a condition. | A new iterable with filtered values. |
+| `reduce()` | Combines all elements into a single value. | A single final result.               |
+
+---
+
+Key Points:
+
+* `map()` transforms each element of an iterable.
+* `filter()` returns only the elements that satisfy a condition.
+* `reduce()` combines all elements into a single value.
+* `map()` and `filter()` return iterators.
+* `reduce()` is available in the `functools` module.
+* These functions are commonly used with `lambda` expressions for concise and readable code.
