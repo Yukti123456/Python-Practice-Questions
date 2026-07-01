@@ -1,0 +1,85 @@
+Question: How do you create a decorator that preserves function metadata?
+
+Answer:
+
+To preserve a function's metadata (such as its name, docstring, annotations, and module information), Python provides the `functools.wraps` decorator.
+
+Without `@wraps`, the decorated function loses its original metadata and appears as the wrapper function.
+
+Benefits:
+
+* Preserves the original function name (`__name__`).
+* Preserves the original docstring (`__doc__`).
+* Preserves annotations and other metadata.
+* Improves debugging and introspection.
+* Considered a best practice when writing decorators.
+
+Example:
+
+```python id="phx82g"
+from functools import wraps
+
+def logger(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print("Function started")
+        result = func(*args, **kwargs)
+        print("Function completed")
+        return result
+    return wrapper
+
+@logger
+def greet():
+    """Greets the user."""
+    print("Hello!")
+
+greet()
+
+print(greet.__name__)
+print(greet.__doc__)
+```
+
+Output:
+
+```text id="v8k3hc"
+Function started
+Hello!
+Function completed
+greet
+Greets the user.
+```
+
+How It Works:
+
+* `@wraps(func)` copies the metadata from the original function to the `wrapper()` function.
+* The wrapper adds extra functionality while preserving the original function's identity.
+* This makes the decorated function behave like the original function during debugging, documentation, and introspection.
+
+Without `@wraps`:
+
+```python id="cfhht6"
+def logger(func):
+    def wrapper():
+        func()
+    return wrapper
+
+@logger
+def greet():
+    """Greets the user."""
+    pass
+
+print(greet.__name__)
+```
+
+Output:
+
+```text id="q0drbf"
+wrapper
+```
+
+Key Points:
+
+* Use `functools.wraps` whenever you create a custom decorator.
+* It preserves the original function's metadata.
+* It makes debugging, documentation, and introspection easier.
+* It is the standard and recommended way to write decorators in Python.
