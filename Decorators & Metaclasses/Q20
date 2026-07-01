@@ -1,0 +1,77 @@
+Question: What are Decorator Chains and how do they execute?
+
+Answer:
+
+A Decorator Chain is the process of applying multiple decorators to the same function. Each decorator wraps the function returned by the previous decorator, creating a chain of function calls.
+
+Benefits:
+
+* Allows multiple functionalities to be added to a function.
+* Promotes code reuse.
+* Keeps the code modular and maintainable.
+
+Example:
+
+```python
+def decorator1(func):
+    def wrapper():
+        print("Decorator 1 - Before")
+        func()
+        print("Decorator 1 - After")
+    return wrapper
+
+
+def decorator2(func):
+    def wrapper():
+        print("Decorator 2 - Before")
+        func()
+        print("Decorator 2 - After")
+    return wrapper
+
+
+@decorator1
+@decorator2
+def greet():
+    print("Hello!")
+
+greet()
+```
+
+Output:
+
+```text
+Decorator 1 - Before
+Decorator 2 - Before
+Hello!
+Decorator 2 - After
+Decorator 1 - After
+```
+
+Execution Order:
+
+Python applies decorators from the bottom to the top.
+
+The above code is equivalent to:
+
+```python
+greet = decorator1(decorator2(greet))
+```
+
+Execution Flow:
+
+1. `decorator2` wraps `greet()`.
+2. `decorator1` wraps the result returned by `decorator2`.
+3. When `greet()` is called:
+
+   * `decorator1` executes first.
+   * Then `decorator2` executes.
+   * Then the original `greet()` function executes.
+   * Control returns to `decorator2`.
+   * Finally, control returns to `decorator1`.
+
+Key Points:
+
+* Multiple decorators can be applied to a single function.
+* Decorators are applied from bottom to top.
+* During execution, the outermost decorator runs first.
+* Decorator chaining is commonly used for logging, authentication, caching, validation, and performance monitoring.
