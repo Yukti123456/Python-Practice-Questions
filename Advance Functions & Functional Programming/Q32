@@ -1,0 +1,81 @@
+Question: What is Memoization and how do you implement it using decorators?
+
+Answer:
+
+Memoization is an optimization technique that stores (caches) the results of expensive function calls. If the function is called again with the same arguments, the cached result is returned instead of recomputing it.
+
+Benefits:
+
+* Improves performance.
+* Avoids repeated calculations.
+* Reduces execution time.
+* Useful for recursive and computationally expensive functions.
+
+Example:
+
+```python
+def memoize(func):
+    cache = {}
+
+    def wrapper(*args):
+        if args in cache:
+            return cache[args]
+
+        result = func(*args)
+        cache[args] = result
+        return result
+
+    return wrapper
+
+
+@memoize
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+print(fibonacci(10))
+```
+
+Output:
+
+```text
+55
+```
+
+How It Works:
+
+* `cache` is a dictionary that stores previously computed results.
+* When the decorated function is called, the decorator checks if the arguments already exist in the cache.
+* If they do, the cached result is returned immediately.
+* Otherwise, the function is executed, and its result is stored in the cache for future use.
+
+Using `functools.lru_cache`:
+
+Python provides a built-in decorator for memoization.
+
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+print(fibonacci(10))
+```
+
+Output:
+
+```text
+55
+```
+
+Key Points:
+
+* Memoization stores the results of previous function calls.
+* It avoids recomputing the same results.
+* Decorators provide a clean way to add memoization without changing the original function.
+* Python's `functools.lru_cache` is the recommended built-in solution for memoization.
