@@ -1,0 +1,77 @@
+Question: How do you create a custom descriptor using `__get__()`, `__set__()`, and `__delete__()`?
+
+Answer:
+
+A descriptor is a class that controls how an attribute is accessed, modified, or deleted. To create a custom descriptor, implement one or more of these special methods:
+
+* `__get__()` – Called when the attribute is accessed.
+* `__set__()` – Called when the attribute is assigned a value.
+* `__delete__()` – Called when the attribute is deleted.
+
+Benefits:
+
+* Encapsulates attribute management.
+* Enables validation and type checking.
+* Promotes code reuse.
+* Controls attribute access in a centralized way.
+
+Example:
+
+```python
+class Descriptor:
+    def __get__(self, instance, owner):
+        print("Getting value")
+        return instance._value
+
+    def __set__(self, instance, value):
+        print("Setting value")
+        instance._value = value
+
+    def __delete__(self, instance):
+        print("Deleting value")
+        del instance._value
+
+
+class Employee:
+    salary = Descriptor()
+
+    def __init__(self, salary):
+        self.salary = salary
+
+
+emp = Employee(50000)
+
+print(emp.salary)
+
+emp.salary = 60000
+print(emp.salary)
+
+del emp.salary
+```
+
+Output:
+
+```text
+Setting value
+Getting value
+50000
+Setting value
+Getting value
+60000
+Deleting value
+```
+
+How It Works:
+
+* `salary` is managed by the `Descriptor` class.
+* When `emp.salary` is accessed, Python calls `__get__()`.
+* When `emp.salary = value` is executed, Python calls `__set__()`.
+* When `del emp.salary` is executed, Python calls `__delete__()`.
+* The actual value is stored in the instance attribute `_value`.
+
+Key Points:
+
+* `__get__()` controls attribute access.
+* `__set__()` controls attribute assignment.
+* `__delete__()` controls attribute deletion.
+* Descriptors are commonly used for validation, computed attributes, lazy loading, and implementing properties.
