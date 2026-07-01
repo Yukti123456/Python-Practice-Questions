@@ -1,0 +1,86 @@
+Question: How do you use the `nonlocal` keyword and when is it necessary?
+
+Answer:
+
+The `nonlocal` keyword is used inside a nested function to modify a variable that belongs to the enclosing (outer) function. Without `nonlocal`, assigning a value creates a new local variable inside the nested function.
+
+Benefits:
+
+* Allows modification of variables in the enclosing scope.
+* Useful for maintaining state in closures.
+* Prevents creating unnecessary global variables.
+
+Example Without `nonlocal`:
+
+```python
+def outer():
+    count = 0
+
+    def inner():
+        count += 1    # Error
+
+    inner()
+
+outer()
+```
+
+Output:
+
+```text
+UnboundLocalError: local variable 'count' referenced before assignment
+```
+
+This error occurs because Python treats `count` as a local variable inside `inner()`.
+
+---
+
+Example With `nonlocal`:
+
+```python
+def outer():
+    count = 0
+
+    def inner():
+        nonlocal count
+        count += 1
+        print(count)
+
+    inner()
+    inner()
+
+outer()
+```
+
+Output:
+
+```text
+1
+2
+```
+
+How It Works:
+
+* `count` is defined in the outer function.
+* `nonlocal count` tells Python to use the variable from the enclosing scope.
+* Changes made inside `inner()` update the same `count` variable instead of creating a new one.
+
+When is `nonlocal` Necessary?
+
+* When a nested function needs to modify a variable from its enclosing function.
+* When implementing closures that maintain state.
+* When avoiding the use of global variables.
+
+Difference Between `global` and `nonlocal`:
+
+| `global`                                | `nonlocal`                                          |
+| --------------------------------------- | --------------------------------------------------- |
+| Refers to a global variable.            | Refers to a variable in the enclosing function.     |
+| Modifies variables in the global scope. | Modifies variables in the outer (non-global) scope. |
+| Used across the entire module.          | Used only inside nested functions.                  |
+
+Key Points:
+
+* `nonlocal` is used only in nested functions.
+* It allows modifying variables from the enclosing function.
+* It is commonly used with closures and decorators.
+* It helps maintain state without using global variables.
