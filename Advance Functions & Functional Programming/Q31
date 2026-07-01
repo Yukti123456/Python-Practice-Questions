@@ -1,0 +1,77 @@
+Question: Explain the concept of Partial Functions using `functools.partial`.
+
+Answer:
+
+A Partial Function is a new function created by fixing (pre-filling) one or more arguments of an existing function. Python provides the `functools.partial` function to create partial functions.
+
+It allows you to reuse a function with some arguments already set, making the code cleaner and more readable.
+
+Benefits:
+
+* Reduces code duplication.
+* Improves code readability.
+* Reuses existing functions.
+* Simplifies functions with frequently used arguments.
+
+Example:
+
+```python id="jlwmpr"
+from functools import partial
+
+def multiply(a, b):
+    return a * b
+
+# Fix the value of 'a' to 10
+multiply_by_10 = partial(multiply, 10)
+
+print(multiply_by_10(5))
+print(multiply_by_10(8))
+```
+
+Output:
+
+```text id="58dzl5"
+50
+80
+```
+
+How It Works:
+
+* `multiply()` takes two arguments: `a` and `b`.
+* `partial(multiply, 10)` creates a new function where `a` is always `10`.
+* The new function requires only the remaining argument (`b`).
+
+The above code is equivalent to:
+
+```python id="5svr5n"
+def multiply_by_10(b):
+    return multiply(10, b)
+```
+
+Another Example:
+
+```python id="2fflrh"
+from functools import partial
+
+def power(base, exponent):
+    return base ** exponent
+
+square = partial(power, exponent=2)
+
+print(square(5))
+print(square(7))
+```
+
+Output:
+
+```text id="4evg8u"
+25
+49
+```
+
+Key Points:
+
+* `functools.partial` creates a new function with some arguments already fixed.
+* The remaining arguments are provided when the new function is called.
+* It helps write cleaner, reusable, and more maintainable code.
+* Common use cases include callbacks, event handlers, configuration functions, and simplifying repeated function calls.
