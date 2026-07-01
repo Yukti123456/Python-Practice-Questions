@@ -1,0 +1,82 @@
+Question: What is the difference between `@classmethod`, `@staticmethod`, and `@property` decorators?
+
+Answer:
+
+`@classmethod`, `@staticmethod`, and `@property` are built-in decorators in Python, but they serve different purposes.
+
+| Decorator       | First Parameter | Accesses                   | Use Case                                                          |
+| --------------- | --------------- | -------------------------- | ----------------------------------------------------------------- |
+| `@classmethod`  | `cls`           | Class variables            | Works with class-level data and creates alternative constructors. |
+| `@staticmethod` | None            | Neither class nor instance | Utility methods that don't depend on class or object state.       |
+| `@property`     | `self`          | Instance variables         | Allows a method to be accessed like an attribute.                 |
+
+Example of `@classmethod`:
+
+```python
+class Employee:
+    company = "OpenAI"
+
+    @classmethod
+    def show_company(cls):
+        print(cls.company)
+
+Employee.show_company()
+```
+
+Output:
+
+```text
+OpenAI
+```
+
+Example of `@staticmethod`:
+
+```python
+class Math:
+
+    @staticmethod
+    def add(a, b):
+        return a + b
+
+print(Math.add(5, 3))
+```
+
+Output:
+
+```text
+8
+```
+
+Example of `@property`:
+
+```python
+class Employee:
+
+    def __init__(self, salary):
+        self._salary = salary
+
+    @property
+    def salary(self):
+        return self._salary
+
+emp = Employee(50000)
+print(emp.salary)
+```
+
+Output:
+
+```text
+50000
+```
+
+How They Work:
+
+* `@classmethod` receives the class (`cls`) as its first argument and can access or modify class variables.
+* `@staticmethod` does not receive `self` or `cls`. It behaves like a regular function placed inside a class.
+* `@property` allows a method to be accessed as if it were an instance attribute.
+
+Key Points:
+
+* Use `@classmethod` when working with class-level data or creating alternative constructors.
+* Use `@staticmethod` for utility functions that do not depend on the class or object.
+* Use `@property` to provide controlled access to instance attributes while keeping a clean attribute-like syntax.
