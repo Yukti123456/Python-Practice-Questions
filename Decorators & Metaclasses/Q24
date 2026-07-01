@@ -1,0 +1,85 @@
+Question: How do you use metaclasses to create an Abstract Base Class (ABC)?
+
+Answer:
+
+An Abstract Base Class (ABC) is a class that cannot be instantiated and is used to define a common interface for its subclasses. In Python, Abstract Base Classes are created using the `ABCMeta` metaclass from the `abc` module.
+
+Subclasses must implement all abstract methods; otherwise, they cannot be instantiated.
+
+Benefits:
+
+* Enforces a common interface.
+* Promotes code consistency.
+* Supports polymorphism.
+* Prevents incomplete implementations.
+
+Example:
+
+```python id="zd7gql"
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+
+    @abstractmethod
+    def sound(self):
+        pass
+
+
+class Dog(Animal):
+    def sound(self):
+        print("Bark")
+
+
+dog = Dog()
+dog.sound()
+
+# This would raise an error:
+# animal = Animal()
+```
+
+Output:
+
+```text id="w7sdg0"
+Bark
+```
+
+Using `ABCMeta` Directly:
+
+```python id="53rhrm"
+from abc import ABCMeta, abstractmethod
+
+class Animal(metaclass=ABCMeta):
+
+    @abstractmethod
+    def sound(self):
+        pass
+
+
+class Cat(Animal):
+    def sound(self):
+        print("Meow")
+
+cat = Cat()
+cat.sound()
+```
+
+Output:
+
+```text id="a8w5f8"
+Meow
+```
+
+How It Works:
+
+* `ABCMeta` is the metaclass that creates abstract base classes.
+* The `@abstractmethod` decorator marks methods that must be implemented.
+* Any subclass must implement all abstract methods before it can be instantiated.
+* Attempting to create an object of the abstract class raises a `TypeError`.
+
+Key Points:
+
+* `ABCMeta` is the metaclass used to create Abstract Base Classes.
+* `ABC` is a helper class that internally uses `ABCMeta`.
+* Abstract classes cannot be instantiated.
+* Subclasses must implement all abstract methods.
+* Abstract Base Classes are commonly used to define interfaces and ensure consistent behavior across subclasses.
