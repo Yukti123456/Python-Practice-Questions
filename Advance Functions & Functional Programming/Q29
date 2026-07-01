@@ -1,0 +1,83 @@
+Question: What is the difference between a Closure and a Nested Function?
+
+Answer:
+
+A Nested Function is a function defined inside another function.
+
+A Closure is a nested function that remembers and accesses variables from its enclosing (outer) function even after the outer function has finished executing.
+
+In simple terms:
+
+* Every closure is a nested function.
+* Not every nested function is a closure.
+
+Example of a Nested Function:
+
+```python
+def outer():
+    print("Outer function")
+
+    def inner():
+        print("Inner function")
+
+    inner()
+
+outer()
+```
+
+Output:
+
+```text
+Outer function
+Inner function
+```
+
+Here, `inner()` is a nested function because it is defined inside `outer()`. It does not remember any variable from the outer function.
+
+---
+
+Example of a Closure:
+
+```python
+def outer(message):
+
+    def inner():
+        print(message)
+
+    return inner
+
+greet = outer("Hello, World!")
+greet()
+```
+
+Output:
+
+```text
+Hello, World!
+```
+
+Here, `inner()` is a closure because it remembers the value of `message` even after `outer()` has finished executing.
+
+Difference Between Nested Function and Closure:
+
+| Nested Function                                    | Closure                                                                  |
+| -------------------------------------------------- | ------------------------------------------------------------------------ |
+| Defined inside another function.                   | A nested function that captures variables from the outer function.       |
+| May or may not access outer variables.             | Always accesses variables from the enclosing scope.                      |
+| Exists only while the outer function is executing. | Retains access to outer variables even after the outer function returns. |
+| Used for code organization.                        | Used for maintaining state and creating function factories.              |
+
+How Closures Work:
+
+* The outer function creates a local variable.
+* The inner function uses that variable.
+* The outer function returns the inner function.
+* Python stores the required variable in the closure.
+* Even after the outer function finishes, the inner function can still access the stored variable.
+
+Key Points:
+
+* A nested function is simply a function inside another function.
+* A closure is a nested function that remembers variables from its enclosing scope.
+* Closures are useful for data hiding, maintaining state, decorators, callbacks, and function factories.
+* Every closure is a nested function, but not every nested function is a closure.
