@@ -1,0 +1,58 @@
+Question: What is a Metaclass and why would you need one?
+
+Answer:
+
+A Metaclass is a class that creates and controls other classes. In Python, everything is an object, including classes, and the class responsible for creating classes is called a metaclass.
+
+By default, Python uses the built-in `type` metaclass to create all classes.
+
+Benefits:
+
+* Customize class creation.
+* Enforce coding standards or rules.
+* Automatically add methods or attributes to classes.
+* Implement design patterns such as the Singleton Pattern.
+
+Example:
+
+```python id="kckqwa"
+class MyMeta(type):
+    def __new__(cls, name, bases, attrs):
+        attrs["company"] = "OpenAI"
+        return super().__new__(cls, name, bases, attrs)
+
+class Employee(metaclass=MyMeta):
+    pass
+
+emp = Employee()
+
+print(emp.company)
+```
+
+Output:
+
+```text id="53ndw0"
+OpenAI
+```
+
+How It Works:
+
+* `MyMeta` inherits from `type`, making it a metaclass.
+* The `__new__()` method is called when the `Employee` class is created.
+* It automatically adds the `company` attribute to the `Employee` class.
+* Every instance of `Employee` can access the `company` attribute.
+
+Why Would You Need a Metaclass?
+
+* To customize how classes are created.
+* To automatically add methods or attributes to classes.
+* To validate class definitions.
+* To enforce coding conventions across multiple classes.
+* To implement advanced design patterns like the Singleton Pattern.
+
+Key Points:
+
+* A metaclass is a class that creates other classes.
+* The default metaclass in Python is `type`.
+* Metaclasses are executed when a class is created, not when an object is created.
+* They are mainly used in advanced frameworks and libraries such as Django, SQLAlchemy, and ORMs.
